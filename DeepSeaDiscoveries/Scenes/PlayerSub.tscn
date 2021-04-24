@@ -15,3 +15,9 @@ polygon = PoolVector2Array( -51.9137, -62.5039, 57.7407, -59.8553, 62.5083, 61.9
 
 [node name="Hook" parent="." instance=ExtResource( 3 )]
 position = Vector2( 2.11893, 130.314 )
+
+[node name="HookLaunch" type="Tween" parent="."]
+
+[node name="HookRetract" type="Tween" parent="."]
+[connection signal="tween_completed" from="HookLaunch" to="." method="_on_HookLaunch_tween_completed"]
+[connection signal="tween_completed" from="HookRetract" to="." method="_on_HookRetract_tween_completed"]

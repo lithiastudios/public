@@ -76,7 +76,8 @@ public class GameWorld : Node2D
 
 	private void AddObstacle(bool isLeft)
 	{
-		 var obstacle = GD.Load<PackedScene>("res://Scenes/Obstacle.tscn");
+		var obstacleName = isLeft ? "LeftObstacle" : "RightObstacle";
+		var obstacle = GD.Load<PackedScene>("res://Scenes/" + obstacleName + ".tscn");
 		var instance = obstacle.Instance() as Obstacle;
 		if (isLeft)
 		{

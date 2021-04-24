@@ -1,3 +1,4 @@
+using DeepSeaDiscoveries.Scripts.Managers;
 using Godot;
 using System;
 
@@ -16,6 +17,8 @@ public class GameWorld : Node2D
 
 	RandomNumberGenerator RandomNumberGenerator;
 
+	PlayerSub PlayerSub;
+
 	DateTime LastObstacle;
 	DateTime LastCreature;
 
@@ -24,7 +27,12 @@ public class GameWorld : Node2D
 	{
 		LastObstacle = DateTime.Now;
 		LastCreature = DateTime.Now;
-	
+
+		PlayerSub = (PlayerSub)GetNode("PlayerSub");
+
+		var globalVars = GlobalManager.GetGlobalGameVariables(this);
+		globalVars.PlayerSub = PlayerSub;
+
 		RandomNumberGenerator = new RandomNumberGenerator();
 		RandomNumberGenerator.Randomize();
 
@@ -67,7 +75,7 @@ public class GameWorld : Node2D
 		{
 			var creature = GD.Load<PackedScene>("res://Scenes/Creature.tscn");
 			var instance = creature.Instance() as Creature;
-			instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y);
+			instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y - 120);
 			AddChild(instance);
 			LastCreature = DateTime.Now;
 		}

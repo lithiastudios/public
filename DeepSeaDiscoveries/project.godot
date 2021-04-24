@@ -19,6 +19,10 @@ config/name="Deep Sea Discoveries"
 run/main_scene="res://Scenes/PlayerSub.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalGameVariables="*res://Scenes/GlobalGameVariables.tscn"
+
 [input]
 
 ui_left={

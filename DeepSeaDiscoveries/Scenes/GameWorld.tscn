@@ -1,34 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/PlayerSub.tscn" type="PackedScene" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 36.2097, 397.994 )
+[ext_resource path="res://Scenes/Wall.tscn" type="PackedScene" id=2]
 
 [node name="GameWorld" type="Node2D"]
 
 [node name="PlayerSub" parent="." instance=ExtResource( 1 )]
-position = Vector2( 492.094, 53.9716 )
+position = Vector2( 490.507, 179.376 )
 
-[node name="LeftWall" type="KinematicBody2D" parent="."]
+[node name="LeftWall" parent="." instance=ExtResource( 2 )]
 
-[node name="LeftWallCollision" type="CollisionShape2D" parent="LeftWall"]
-position = Vector2( 193.663, 282.557 )
-shape = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="LeftWall"]
-position = Vector2( 193.663, 334.942 )
-scale = Vector2( 0.925591, 7.25039 )
-texture = ExtResource( 2 )
-
-[node name="RightWall" type="KinematicBody2D" parent="."]
-
-[node name="Sprite2" type="Sprite" parent="RightWall"]
-position = Vector2( 839.735, 311.131 )
-scale = Vector2( 0.925591, 7.25039 )
-texture = ExtResource( 2 )
-
-[node name="RightWallCollision" type="CollisionShape2D" parent="RightWall"]
-position = Vector2( 838.148, 274.62 )
-shape = SubResource( 1 )
+[node name="RightWall" parent="." instance=ExtResource( 2 )]
+position = Vector2( 796.875, 6.34961 )

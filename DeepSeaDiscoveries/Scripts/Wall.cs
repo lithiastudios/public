@@ -10,6 +10,9 @@ public class Wall : KinematicBody2D
 
 	private Rect2 ViewPortSize;
 
+	private CollisionShape2D CollisionShape;
+	public float CollisionHeight;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -17,6 +20,9 @@ public class Wall : KinematicBody2D
 		GD.Print("CurrentPos GLobal:" + GlobalPosition);
 
 		GD.Print("CurrentPos local:" + Position);
+		CollisionShape = GetNode<CollisionShape2D>("Collision");
+		var shape = CollisionShape.Shape as RectangleShape2D;
+		CollisionHeight = shape.Extents.y;
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,7 +34,7 @@ public class Wall : KinematicBody2D
 
 		if(GlobalPosition.y <= -ViewPortSize.Size.y)
 		{
-			var resetPosition = new Vector2(GlobalPosition.x, 2000);// ViewPortSize.Size.y) ;
+			var resetPosition = new Vector2(GlobalPosition.x, ViewPortSize.Size.y + CollisionHeight + 100);// ViewPortSize.Size.y) ;
 			GD.Print("Resetting wall to bottom: " + resetPosition + ": WAS: " + GlobalPosition.y);
 
 		  GlobalPosition = resetPosition;

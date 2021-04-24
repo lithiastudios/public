@@ -28,7 +28,7 @@ collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="Hook" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, 54.562 )
+position = Vector2( 0, 44.1564 )
 
 [node name="HookLaunch" type="Tween" parent="."]
 

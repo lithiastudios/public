@@ -8,9 +8,12 @@ public class Wall : KinematicBody2D
 	// private int a = 2;
 	// private string b = "text";
 
+	private Rect2 ViewPortSize;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		ViewPortSize = GetViewportRect();
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -18,5 +21,7 @@ public class Wall : KinematicBody2D
 	{
 		var moveVec = new Vector2(0, -1f);
 		MoveAndCollide(moveVec * delta * MOVE_SPEED);
+		GD.Print("Position:" + Position.y);
+		GD.Print("VPRect:" + ViewPortSize);
 	}
 }

@@ -28,7 +28,10 @@ collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="Hook" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, 44.1564 )
+position = Vector2( 0, 4 )
+
+[node name="CollisionShape2D" parent="Hook/Claw/Area2D" index="0"]
+position = Vector2( -0.297302, 6.24335 )
 
 [node name="HookLaunch" type="Tween" parent="."]
 
@@ -48,3 +51,5 @@ hframes = 10
 frame = 6
 [connection signal="tween_completed" from="HookLaunch" to="." method="_on_HookLaunch_tween_completed"]
 [connection signal="tween_completed" from="HookRetract" to="." method="_on_HookRetract_tween_completed"]
+
+[editable path="Hook"]

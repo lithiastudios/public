@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 68.4808, 51.6148 )
+
+[node name="Hook" type="Node2D"]
+
+[node name="Claw" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Claw"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Claw"]
+self_modulate = Color( 0.254902, 1, 0.0196078, 1 )
+texture = ExtResource( 1 )

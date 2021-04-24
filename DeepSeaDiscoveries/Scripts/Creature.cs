@@ -26,7 +26,7 @@ public class Creature : KinematicBody2D
 	{
 		if (!Caught)
 		{
-			var moveVec = new Vector2(0f, -1f);
+			var moveVec = new Vector2(0f, -.25f);
 
 			MoveAndSlide(moveVec * GameConstants.BACKGROUND_MOVE_SPEED);
 

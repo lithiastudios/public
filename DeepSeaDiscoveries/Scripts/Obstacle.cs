@@ -1,10 +1,9 @@
+using DeepSeaDiscoveries;
 using Godot;
 using System;
 
 public class Obstacle : Node2D
 {
-
-	private const int MOVE_SPEED = 100;
 
 	// Declare member variables here. Examples:
 	// private int a = 2;
@@ -21,6 +20,6 @@ public class Obstacle : Node2D
   {
 		var moveVec = new Vector2(0, -1f);
 
-		Translate(moveVec * delta * MOVE_SPEED);
+		Translate(moveVec * delta * GameConstants.BACKGROUND_MOVE_SPEED);
 	}
 }

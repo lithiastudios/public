@@ -3,7 +3,7 @@ using System;
 
 public class GameWorld : Node2D
 {
-	private const int TimeBetweenObstaclesSeconds = 5;
+	private const int TimeBetweenObstaclesSeconds = 2;
 
 	private Wall LeftWall;
 	private Wall LeftWall2;
@@ -15,8 +15,7 @@ public class GameWorld : Node2D
 
 	RandomNumberGenerator RandomNumberGenerator;
 
-	DateTime LastObstacleLeft;
-	DateTime LastObstacleRight;
+	DateTime LastObstacle;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -42,13 +41,21 @@ public class GameWorld : Node2D
 	  {
 		  var randomNumber = RandomNumberGenerator.RandiRange(0, 100);
 
-		  if(randomNumber == 0 && (DateTime.Now - LastObstacleLeft).Seconds >= TimeBetweenObstaclesSeconds)
+		  if(randomNumber == 0 && (DateTime.Now - LastObstacle).Seconds >= TimeBetweenObstaclesSeconds)
 		  {
+			 var leftRightRandom = RandomNumberGenerator.RandiRange(0, 1);
 			var obstacle = GD.Load<PackedScene>("res://Scenes/Obstacle.tscn");
 			var instance = obstacle.Instance() as Obstacle;
-			instance.Position = new Vector2(LeftWall.GlobalPosition.x + 75, GetViewportRect().Size.y);
+			if(leftRightRandom == 0)
+			{
+				instance.Position = new Vector2(LeftWall.GlobalPosition.x + 75, GetViewportRect().Size.y);
+			}
+			else
+			{
+				instance.Position = new Vector2(RightWall.GlobalPosition.x - 75, GetViewportRect().Size.y);				
+			}
 			AddChild(instance);
-			LastObstacleLeft = DateTime.Now;
+			LastObstacle = DateTime.Now;
 		  }
   		  //GameTime += delta;
 	  }

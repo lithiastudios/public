@@ -1,9 +1,9 @@
+using DeepSeaDiscoveries;
 using Godot;
 using System;
 
 public class Wall : StaticBody2D
 {
-	private const int MOVE_SPEED = 100;
 	// Declare member variables here. Examples:
 	// private int a = 2;
 	// private string b = "text";
@@ -25,7 +25,7 @@ public class Wall : StaticBody2D
 	{
 		var moveVec = new Vector2(0, -1f);
 	
-		Translate(moveVec * delta * MOVE_SPEED);
+		Translate(moveVec * delta * GameConstants.BACKGROUND_MOVE_SPEED);
 		///	GD.Print("VPRect:" + ViewPortSize);
 
 		if (GlobalPosition.y <= -CollisionHeight) 

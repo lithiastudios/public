@@ -4,15 +4,17 @@ using System;
 
 public class Obstacle : Node2D
 {
-
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
+	private CollisionShape2D CollisionShape;
+	public float CollisionHeight;
+	public float CollisionWidth;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
+		CollisionShape = GetNode<CollisionShape2D>("StaticBody2D/CollisionShape2D");
+		var shape = CollisionShape.Shape as RectangleShape2D;
+		CollisionHeight = shape.Extents.y;
+		CollisionWidth = shape.Extents.x;
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

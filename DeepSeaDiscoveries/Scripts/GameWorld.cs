@@ -58,17 +58,8 @@ public class GameWorld : Node2D
 		if (randomNumber == 0 && (DateTime.Now - LastObstacle).Seconds >= TimeBetweenObstaclesSeconds)
 		{
 			var leftRightRandom = RandomNumberGenerator.RandiRange(0, 1);
-			var obstacle = GD.Load<PackedScene>("res://Scenes/Obstacle.tscn");
-			var instance = obstacle.Instance() as Obstacle;
-			if (leftRightRandom == 0)
-			{
-				instance.Position = new Vector2(LeftWall.GlobalPosition.x + 75, GetViewportRect().Size.y);
-			}
-			else
-			{
-				instance.Position = new Vector2(RightWall.GlobalPosition.x - 75, GetViewportRect().Size.y);
-			}
-			AddChild(instance);
+
+			AddObstacle(leftRightRandom == 0); 
 			LastObstacle = DateTime.Now;
 		}
 
@@ -76,10 +67,25 @@ public class GameWorld : Node2D
 		{
 			var creature = GD.Load<PackedScene>("res://Scenes/Creature.tscn");
 			var instance = creature.Instance() as Creature;
-			instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y - 120);
+			instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y);
 			AddChild(instance);
 			LastCreature = DateTime.Now;
 		}
 		//GameTime += delta;
+	}
+
+	private void AddObstacle(bool isLeft)
+	{
+		 var obstacle = GD.Load<PackedScene>("res://Scenes/Obstacle.tscn");
+		var instance = obstacle.Instance() as Obstacle;
+		if (isLeft)
+		{
+			instance.Position = new Vector2(LeftWall.GlobalPosition.x + LeftWall.CollisionWidth/2 + instance.CollisionWidth/2, GetViewportRect().Size.y);
+		}
+		else
+		{
+			instance.Position = new Vector2(RightWall.GlobalPosition.x - RightWall.CollisionWidth/2 + instance.CollisionWidth/2, GetViewportRect().Size.y);
+		}
+		AddChild(instance);
 	}
 }

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/PlayerSub.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Wall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/GameWorld.cs" type="Script" id=3]
+[ext_resource path="res://Sprites/wall.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/wallright.png" type="Texture" id=5]
 
 [node name="GameWorld" type="Node2D"]
 script = ExtResource( 3 )
@@ -13,11 +15,43 @@ position = Vector2( 490.507, 179.376 )
 [node name="LeftWall" parent="." instance=ExtResource( 2 )]
 position = Vector2( 148.286, 461.934 )
 
+[node name="Sprite" parent="LeftWall" index="1"]
+visible = true
+modulate = Color( 1, 1, 1, 1 )
+scale = Vector2( 1, 1 )
+texture = ExtResource( 4 )
+
 [node name="LeftWall2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 148.286, 1389.4 )
+
+[node name="Sprite" parent="LeftWall2" index="1"]
+visible = true
+modulate = Color( 1, 1, 1, 1 )
+scale = Vector2( 1, 1 )
+texture = ExtResource( 4 )
 
 [node name="RightWall" parent="." instance=ExtResource( 2 )]
 position = Vector2( 788.168, 463.175 )
 
+[node name="Sprite" parent="RightWall" index="1"]
+visible = true
+modulate = Color( 1, 1, 1, 1 )
+scale = Vector2( 1, 1 )
+texture = ExtResource( 5 )
+
 [node name="RightWall2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 791.071, 1395.09 )
+
+[node name="Sprite" parent="RightWall2" index="1"]
+visible = true
+modulate = Color( 1, 1, 1, 1 )
+scale = Vector2( 1, 1 )
+texture = ExtResource( 5 )
+
+[editable path="LeftWall"]
+
+[editable path="LeftWall2"]
+
+[editable path="RightWall"]
+
+[editable path="RightWall2"]

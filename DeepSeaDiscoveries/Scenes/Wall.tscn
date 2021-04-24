@@ -4,7 +4,7 @@
 [ext_resource path="res://Scripts/Wall.cs" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 40, 300 )
+extents = Vector2( 29.2248, 298.398 )
 
 [node name="Wall" type="StaticBody2D"]
 collision_layer = 2

@@ -10,5 +10,11 @@ position = Vector2( 490.507, 179.376 )
 
 [node name="LeftWall" parent="." instance=ExtResource( 2 )]
 
+[node name="LeftWall2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 922.664 )
+
 [node name="RightWall" parent="." instance=ExtResource( 2 )]
 position = Vector2( 796.875, 6.34961 )
+
+[node name="RightWall2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 794.63, 933.503 )

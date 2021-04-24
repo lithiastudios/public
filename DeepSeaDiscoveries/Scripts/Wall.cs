@@ -28,9 +28,10 @@ public class Wall : KinematicBody2D
 
 		if(GlobalPosition.y <= -ViewPortSize.Size.y)
 		{
-			GD.Print("Resetting wall to bottom");
-			var resetPosition = new Vector2(GlobalPosition.x, 1000);// ViewPortSize.Size.y);
-			//GlobalPosition = resetPosition;
+			var resetPosition = new Vector2(GlobalPosition.x, 2000);// ViewPortSize.Size.y) ;
+			GD.Print("Resetting wall to bottom: " + resetPosition + ": WAS: " + GlobalPosition.y);
+
+		  GlobalPosition = resetPosition;
 		}
 	}
 }

@@ -30,11 +30,11 @@ public class Wall : KinematicBody2D
 	{
 		var moveVec = new Vector2(0, -1f);
 		MoveAndCollide(moveVec * delta * MOVE_SPEED);
-	///	GD.Print("VPRect:" + ViewPortSize);
+		///	GD.Print("VPRect:" + ViewPortSize);
 
-		if(GlobalPosition.y <= -ViewPortSize.Size.y)
+		if (GlobalPosition.y <= -CollisionHeight) 
 		{
-			var resetPosition = new Vector2(GlobalPosition.x, ViewPortSize.Size.y + CollisionHeight + 100);// ViewPortSize.Size.y) ;
+			var resetPosition = new Vector2(GlobalPosition.x, ViewPortSize.Size.y + CollisionHeight);// ViewPortSize.Size.y) ;
 			GD.Print("Resetting wall to bottom: " + resetPosition + ": WAS: " + GlobalPosition.y);
 
 		  GlobalPosition = resetPosition;

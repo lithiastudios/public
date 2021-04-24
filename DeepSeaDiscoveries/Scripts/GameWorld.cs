@@ -22,8 +22,11 @@ public class GameWorld : Node2D
 		RightWall = GetNode<Wall>("RightWall");
 		RightWall2 = GetNode<Wall>("RightWall2");
 
-		LeftWall2.GlobalPosition = new Vector2(LeftWall.GlobalPosition.x, LeftWall.GlobalPosition.y + LeftWall2.CollisionHeight*2 + 100);
-		RightWall2.GlobalPosition = new Vector2(RightWall.GlobalPosition.x, RightWall.GlobalPosition.y + RightWall2.CollisionHeight*2 + 100);
+		LeftWall.GlobalPosition = new Vector2(LeftWall.GlobalPosition.x, 0);
+		RightWall.GlobalPosition = new Vector2(RightWall.GlobalPosition.x, 0);
+
+		LeftWall2.GlobalPosition = new Vector2(LeftWall.GlobalPosition.x, LeftWall2.CollisionHeight*2);
+		RightWall2.GlobalPosition = new Vector2(RightWall.GlobalPosition.x, RightWall2.CollisionHeight * 2);
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -8,16 +8,13 @@ public class Wall : StaticBody2D
 	// private int a = 2;
 	// private string b = "text";
 
-	private Rect2 ViewPortSize;
-
+	
 	private CollisionShape2D CollisionShape;
 	public float CollisionHeight;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		ViewPortSize = GetViewportRect();
-
 		CollisionShape = GetNode<CollisionShape2D>("Collision");
 		var shape = CollisionShape.Shape as RectangleShape2D;
 		CollisionHeight = shape.Extents.y;
@@ -33,7 +30,7 @@ public class Wall : StaticBody2D
 
 		if (GlobalPosition.y <= -CollisionHeight) 
 		{
-			var resetPosition = new Vector2(GlobalPosition.x, ViewPortSize.Size.y + CollisionHeight );// ViewPortSize.Size.y) ;
+			var resetPosition = new Vector2(GlobalPosition.x, GetViewportRect().Size.y + CollisionHeight );// ViewPortSize.Size.y) ;
 			GD.Print(DateTime.Now + "Resetting wall to bottom: " + resetPosition + ": WAS: " + GlobalPosition.y);
 
 		  GlobalPosition = resetPosition;

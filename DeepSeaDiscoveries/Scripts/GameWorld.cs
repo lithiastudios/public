@@ -3,9 +3,7 @@ using System;
 
 public class GameWorld : Node2D
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
+	private const int TimeBetweenObstaclesSeconds = 5;
 
 	private Wall LeftWall;
 	private Wall LeftWall2;
@@ -13,9 +11,19 @@ public class GameWorld : Node2D
 	private Wall RightWall;
 	private Wall RightWall2;
 
+	private float GameTime;
+
+	RandomNumberGenerator RandomNumberGenerator;
+
+	DateTime LastObstacleLeft;
+	DateTime LastObstacleRight;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		RandomNumberGenerator = new RandomNumberGenerator();
+		RandomNumberGenerator.Randomize();
+
 		LeftWall = GetNode<Wall>("LeftWall");
 		LeftWall2 = GetNode<Wall>("LeftWall2");
 
@@ -30,8 +38,18 @@ public class GameWorld : Node2D
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
-	//  {
-	//      
-	//  }
+	  public override void _Process(float delta)
+	  {
+		  var randomNumber = RandomNumberGenerator.RandiRange(0, 100);
+
+		  if(randomNumber == 0 && (DateTime.Now - LastObstacleLeft).Seconds >= TimeBetweenObstaclesSeconds)
+		  {
+			var obstacle = GD.Load<PackedScene>("res://Scenes/Obstacle.tscn");
+			var instance = obstacle.Instance() as Obstacle;
+			instance.Position = new Vector2(LeftWall.GlobalPosition.x + 75, GetViewportRect().Size.y);
+			AddChild(instance);
+			LastObstacleLeft = DateTime.Now;
+		  }
+  		  //GameTime += delta;
+	  }
 }

@@ -10,7 +10,7 @@ public class PlayerSub : KinematicBody2D
 	private Tween HookRetract;
 
 	private bool Moveable;
-	private Vector2 CurrentHookPosition;
+	private Vector2 OriginalHookPosition;
 	
 	public override void _Ready()
 	{
@@ -18,6 +18,7 @@ public class PlayerSub : KinematicBody2D
 		Hook = GetNode<Node2D>("Hook");
 		HookLaunch = GetNode<Tween>("HookLaunch");
 		HookRetract = GetNode<Tween>("HookRetract");
+		OriginalHookPosition = Hook.Position;
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,23 +26,22 @@ public class PlayerSub : KinematicBody2D
 	{
 		Vector2 playerVec = new Vector2();
 
-		if(Input.IsActionPressed("ui_left") && Moveable)
+		if(Input.IsActionPressed("ui_left"))
 		{
 			playerVec = new Vector2(-1, 0);
 		}
-		else
-			if(Input.IsActionPressed("ui_right")  && Moveable)
+		
+			if(Input.IsActionPressed("ui_right"))
 			{
 				playerVec = new Vector2(1, 0);
 			}
-			else
-			if(Input.IsActionJustPressed("ui_accept") || Input.IsActionJustPressed("ui_select") && Moveable)
+			
+			if(Input.IsActionPressed("ui_accept") || Input.IsActionPressed("ui_select") && Moveable)
 			{
+				Moveable = false;
 			GD.Print("activated");
-			var currentHookPos = Hook.Position;
 
-			CurrentHookPosition = currentHookPos;
-			HookLaunch.InterpolateProperty(Hook, "position", currentHookPos, new Vector2(currentHookPos.x, currentHookPos.y + 100), 1, Tween.TransitionType.Linear, Tween.EaseType.InOut);
+			HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + 100), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
 			HookLaunch.Start();
 			}
 		MoveAndCollide(playerVec * delta * MOVE_SPEED);
@@ -52,7 +52,7 @@ public class PlayerSub : KinematicBody2D
 	{
 		GD.Print("retracting..");
 		var currentHookPos = Hook.Position;
-		HookRetract.InterpolateProperty(Hook, "position", currentHookPos, new Vector2(CurrentHookPosition.x, CurrentHookPosition.y), 1, Tween.TransitionType.Linear, Tween.EaseType.InOut);
+		HookRetract.InterpolateProperty(Hook, "position", currentHookPos, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y), 1, Tween.TransitionType.Linear, Tween.EaseType.InOut);
 		HookRetract.Start();
 		// Replace with function body.
 	}

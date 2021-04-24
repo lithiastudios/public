@@ -9,12 +9,12 @@ public class PlayerSub : KinematicBody2D
 	private Tween HookLaunch;
 	private Tween HookRetract;
 
-	private bool Moveable;
+	private bool Hookable;
 	private Vector2 OriginalHookPosition;
 	
 	public override void _Ready()
 	{
-		Moveable = true;
+		Hookable = true;
 		Hook = GetNode<Node2D>("Hook");
 		HookLaunch = GetNode<Tween>("HookLaunch");
 		HookRetract = GetNode<Tween>("HookRetract");
@@ -36,9 +36,9 @@ public class PlayerSub : KinematicBody2D
 				playerVec = new Vector2(1, 0);
 			}
 			
-			if(Input.IsActionPressed("ui_accept") || Input.IsActionPressed("ui_select") && Moveable)
+			if((Input.IsActionPressed("ui_accept") || Input.IsActionPressed("ui_select")) && Hookable)
 			{
-				Moveable = false;
+				Hookable = false;
 			GD.Print("activated");
 
 			HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + 100), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
@@ -60,7 +60,7 @@ public class PlayerSub : KinematicBody2D
 	
 private void _on_HookRetract_tween_completed(Godot.Object @object, NodePath key)
 {
-		Moveable = true;
+		Hookable = true;
 }
 
 }

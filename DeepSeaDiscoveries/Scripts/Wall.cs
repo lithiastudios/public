@@ -31,9 +31,8 @@ public class Wall : StaticBody2D
 		if (GlobalPosition.y <= -CollisionHeight) 
 		{
 			var resetPosition = new Vector2(GlobalPosition.x, GetViewportRect().Size.y + CollisionHeight );// ViewPortSize.Size.y) ;
-			GD.Print(DateTime.Now + "Resetting wall to bottom: " + resetPosition + ": WAS: " + GlobalPosition.y);
-
-		  GlobalPosition = resetPosition;
+		
+			 GlobalPosition = resetPosition;
 		}
 	}
 }

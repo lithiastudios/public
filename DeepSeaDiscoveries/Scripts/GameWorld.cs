@@ -46,7 +46,6 @@ public class GameWorld : Node2D
 	{
 		var randomNumber = RandomNumberGenerator.RandiRange(0, 100);
 
-		GD.Print("Rand:" + randomNumber);
 		if (randomNumber == 0 && (DateTime.Now - LastObstacle).Seconds >= TimeBetweenObstaclesSeconds)
 		{
 			var leftRightRandom = RandomNumberGenerator.RandiRange(0, 1);

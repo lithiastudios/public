@@ -11,6 +11,7 @@ self_modulate = Color( 1, 0.960784, 0, 1 )
 script = ExtResource( 2 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 1 )

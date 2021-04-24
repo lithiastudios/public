@@ -11,12 +11,13 @@ script = ExtResource( 3 )
 position = Vector2( 490.507, 179.376 )
 
 [node name="LeftWall" parent="." instance=ExtResource( 2 )]
+position = Vector2( 148.286, 461.934 )
 
 [node name="LeftWall2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, 922.664 )
+position = Vector2( 148.286, 1389.4 )
 
 [node name="RightWall" parent="." instance=ExtResource( 2 )]
-position = Vector2( 796.875, 6.34961 )
+position = Vector2( 788.168, 463.175 )
 
 [node name="RightWall2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 794.63, 933.503 )
+position = Vector2( 791.071, 1395.09 )

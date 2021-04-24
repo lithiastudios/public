@@ -14,6 +14,9 @@ public class Wall : KinematicBody2D
 	public override void _Ready()
 	{
 		ViewPortSize = GetViewportRect();
+		GD.Print("CurrentPos GLobal:" + GlobalPosition);
+
+		GD.Print("CurrentPos local:" + Position);
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,7 +24,13 @@ public class Wall : KinematicBody2D
 	{
 		var moveVec = new Vector2(0, -1f);
 		MoveAndCollide(moveVec * delta * MOVE_SPEED);
-		GD.Print("Position:" + Position.y);
-		GD.Print("VPRect:" + ViewPortSize);
+	///	GD.Print("VPRect:" + ViewPortSize);
+
+		if(GlobalPosition.y <= -ViewPortSize.Size.y)
+		{
+			GD.Print("Resetting wall to bottom");
+			var resetPosition = new Vector2(GlobalPosition.x, 1000);// ViewPortSize.Size.y);
+			//GlobalPosition = resetPosition;
+		}
 	}
 }

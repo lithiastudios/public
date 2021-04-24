@@ -12,11 +12,9 @@ script = ExtResource( 2 )
 [node name="Collision" type="CollisionShape2D" parent="."]
 modulate = Color( 0.952941, 0.027451, 0.027451, 1 )
 self_modulate = Color( 0.941176, 0, 0, 1 )
-position = Vector2( 193.663, 282.557 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.882353, 0.0784314, 0.0784314, 1 )
-position = Vector2( 193.663, 334.942 )
 scale = Vector2( 0.925591, 7.25039 )
 texture = ExtResource( 1 )

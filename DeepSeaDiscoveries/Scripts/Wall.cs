@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Wall : KinematicBody2D
+public class Wall : StaticBody2D
 {
 	private const int MOVE_SPEED = 100;
 	// Declare member variables here. Examples:
@@ -17,9 +17,7 @@ public class Wall : KinematicBody2D
 	public override void _Ready()
 	{
 		ViewPortSize = GetViewportRect();
-		GD.Print("CurrentPos GLobal:" + GlobalPosition);
 
-		GD.Print("CurrentPos local:" + Position);
 		CollisionShape = GetNode<CollisionShape2D>("Collision");
 		var shape = CollisionShape.Shape as RectangleShape2D;
 		CollisionHeight = shape.Extents.y;
@@ -29,13 +27,14 @@ public class Wall : KinematicBody2D
 	  public override void _Process(float delta)
 	{
 		var moveVec = new Vector2(0, -1f);
-		MoveAndCollide(moveVec * delta * MOVE_SPEED);
+	
+		Translate(moveVec * delta * MOVE_SPEED);
 		///	GD.Print("VPRect:" + ViewPortSize);
 
 		if (GlobalPosition.y <= -CollisionHeight) 
 		{
-			var resetPosition = new Vector2(GlobalPosition.x, ViewPortSize.Size.y + CollisionHeight);// ViewPortSize.Size.y) ;
-			GD.Print("Resetting wall to bottom: " + resetPosition + ": WAS: " + GlobalPosition.y);
+			var resetPosition = new Vector2(GlobalPosition.x, ViewPortSize.Size.y + CollisionHeight );// ViewPortSize.Size.y) ;
+			GD.Print(DateTime.Now + "Resetting wall to bottom: " + resetPosition + ": WAS: " + GlobalPosition.y);
 
 		  GlobalPosition = resetPosition;
 		}

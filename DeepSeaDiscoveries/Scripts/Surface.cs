@@ -9,6 +9,7 @@ public class Surface : Node2D
 	private  Array Water3MarginTops = new int[] { 434, 429 };
 
 	private Array SubBobPositions = new float[] { 400, 395 };
+	private AudioStreamPlayer TimerSound;
 
 	private AnimationPlayer CircleWipeAnimationPlayer;
 	private PlayerSub PlayerSub;
@@ -36,6 +37,8 @@ public class Surface : Node2D
 
 	public override void _Ready()
 	{
+		TimerSound = GetNode<AudioStreamPlayer>("TimerSound");
+
 		MoneyLabel = GetNode<Label>("CanvasLayer/MoneyLabel");
 		LaunchTimer = GetNode<Timer>("LaunchTimer");
 
@@ -132,6 +135,7 @@ public class Surface : Node2D
 	{
 		if (TimeOut > 0)
 		{
+			TimerSound.Play();
 			LaunchTimer.Start();
 			TimeOut--;
 			LaunchLabel.Text = "Launching In  " + TimeOut + " !";
@@ -154,6 +158,7 @@ public class Surface : Node2D
 
 	private void _on_Area2D_area_entered(object area)
 	{
+		TimerSound.Play();
 		LaunchTimer.Start();
 		TimeOut = 3;
 		LaunchLabel.Text = "Launching In   3 !";

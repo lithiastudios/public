@@ -7,6 +7,10 @@ public class GameWorld : Node2D
 	private const int TimeBetweenObstaclesSeconds = 2;
 	private const int TimeBetweenCreaturesSeconds = 2;
 
+	private Label DepthLabel;
+	
+	private CanvasLayer ScoreCanvas;
+
 	private Wall LeftWall;
 	private Wall LeftWall2;
 
@@ -14,8 +18,8 @@ public class GameWorld : Node2D
 	private Wall RightWall2;
 
 	private Timer GameOverTimer;
-	private float GameTime;
-
+	
+	private DateTime TimeStarted;
 	RandomNumberGenerator RandomNumberGenerator;
 
 	PlayerSub PlayerSub;
@@ -24,14 +28,19 @@ public class GameWorld : Node2D
 	DateTime LastCreature;
 
 	private AnimationPlayer CircleWipeAnimationPlayer;
-
+	private int Depth;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		TimeStarted = DateTime.Now;
 		OS.CenterWindow();
 		LastObstacle = DateTime.Now;
 		LastCreature = DateTime.Now;
 
+		ScoreCanvas = GetNode<CanvasLayer>("ScoreCanvas");
+
+		DepthLabel = GetNode<Label>("ScoreCanvas/DepthLabel");
 		GameOverTimer = GetNode<Timer>("GameOverTimer");
 		PlayerSub = (PlayerSub)GetNode("PlayerSub");
 		CircleWipeAnimationPlayer = (AnimationPlayer)GetNode("CircleWipe/ColorRect/AnimationPlayer");
@@ -78,7 +87,12 @@ public class GameWorld : Node2D
 				AddChild(instance);
 				LastCreature = DateTime.Now;
 			}
+	
+			var numSecs = (DateTime.Now - TimeStarted).Seconds;
+			Depth =  (int)(numSecs * 1.5f);
+			DepthLabel.Text = Depth.ToString() + "m";
 		}
+
 		//GameTime += delta;
 	}
 

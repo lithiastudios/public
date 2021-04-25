@@ -82,7 +82,7 @@ process_material = SubResource( 3 )
 texture = ExtResource( 4 )
 
 [node name="CrashParticles" type="Particles2D" parent="."]
-position = Vector2( 2.27625, 24.7466 )
+position = Vector2( 0.887268, 1.53087 )
 rotation = 3.68264
 emitting = false
 amount = 25

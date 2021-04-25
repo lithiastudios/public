@@ -13,6 +13,7 @@ public class GameWorld : Node2D
 	private Wall RightWall;
 	private Wall RightWall2;
 
+	private Timer GameOverTimer;
 	private float GameTime;
 
 	RandomNumberGenerator RandomNumberGenerator;
@@ -31,6 +32,7 @@ public class GameWorld : Node2D
 		LastObstacle = DateTime.Now;
 		LastCreature = DateTime.Now;
 
+		GameOverTimer = GetNode<Timer>("GameOverTimer");
 		PlayerSub = (PlayerSub)GetNode("PlayerSub");
 		CircleWipeAnimationPlayer = (AnimationPlayer)GetNode("CircleWipe/ColorRect/AnimationPlayer");
 
@@ -99,8 +101,17 @@ public class GameWorld : Node2D
 	
 	private void _on_PlayerSub_SubIsDead()
 	{
-		CircleWipeAnimationPlayer.Play("circle_in");
-	// Replace with function body.
+		GameOverTimer.Start();
 	}
+	
+	
+private void _on_GameOverTimer_timeout()
+{
+		CircleWipeAnimationPlayer.Play("circle_in");
+
+	// Replace with function body.
 }
+
+}
+
 

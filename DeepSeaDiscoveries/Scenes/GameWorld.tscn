@@ -138,7 +138,11 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CircleWipe/ColorRect"]
 anims/circle_in = SubResource( 4 )
+
+[node name="GameOverTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="SubIsDead" from="PlayerSub" to="." method="_on_PlayerSub_SubIsDead"]
+[connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
 
 [editable path="LeftWall"]
 

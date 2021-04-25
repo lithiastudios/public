@@ -13,6 +13,8 @@ namespace DeepSeaDiscoveries.Scripts
 		public bool IsGameStopped;
 		public bool LevelHasBeenPlayed;
 
+		public int PlayerMoney;
+
 		public override void _Ready()
 		{
 

@@ -28,6 +28,18 @@ namespace DeepSeaDiscoveries.Scripts.Managers
 			return globalVars.LevelHasBeenPlayed;
 		}
 
+		public static void SetPlayerMoney(Node2D currentNode, int money)
+		{
+			var globalVars = GetGlobalGameVariables(currentNode);
+			globalVars.PlayerMoney = money;
+		}
+
+		public static int GetPlayerMoney(Node2D currentNode, int money)
+		{
+			var globalVars = GetGlobalGameVariables(currentNode);
+			return globalVars.PlayerMoney;
+		}
+
 
 		public static void StopGame(Node2D currentNode)
         {

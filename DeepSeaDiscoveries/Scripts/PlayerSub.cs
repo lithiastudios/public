@@ -92,8 +92,17 @@ public class PlayerSub : KinematicBody2D
 		}
 		HasCreature = false;
 	}
+	
+	
+private void _on_HitBox_area_entered(object area)
+{
+	GD.Print("SUB IS DEAD!");
+	// Replace with function body.
+}
 
 }
+
+
 
 
 

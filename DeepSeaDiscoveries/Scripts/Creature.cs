@@ -12,13 +12,24 @@ public class Creature : KinematicBody2D
 	private CollisionShape2D CollisionShape;
 	private float CollisionHeight;
 	private bool Caught;
-	private int Cost = 50;
 
+	private Sprite CreatureSprite;
+
+	public int Cost;
 	public string SpriteName;
+
+	public void Init(int cost, string spriteName)
+	{
+		Cost = cost;
+		SpriteName = spriteName;
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		CreatureSprite = GetNode<Sprite>("Sprite");
+		var tex = ResourceLoader.Load<Texture>("res://Sprites/" + SpriteName + ".png");
+		CreatureSprite.Texture = tex;
 		CollisionShape = GetNode<CollisionShape2D>("HurtBox/Collision");
 		var shape = CollisionShape.Shape as RectangleShape2D;
 		CollisionHeight = shape.Extents.y;

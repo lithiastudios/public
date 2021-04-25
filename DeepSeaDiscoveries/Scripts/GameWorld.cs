@@ -83,7 +83,10 @@ public class GameWorld : Node2D
 			{
 				var creature = GD.Load<PackedScene>("res://Scenes/Creature.tscn");
 				var instance = creature.Instance() as Creature;
+				
 				instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y);
+				instance.Init(45, "fish1");
+
 				AddChild(instance);
 				LastCreature = DateTime.Now;
 			}

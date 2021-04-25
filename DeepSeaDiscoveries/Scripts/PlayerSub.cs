@@ -4,6 +4,9 @@ using System;
 
 public class PlayerSub : KinematicBody2D
 {
+	[Signal]
+	public delegate void SubIsDead();
+
 	private const int MOVE_SPEED = 250;
 
 	private Node2D Hook;
@@ -112,6 +115,8 @@ private void _on_HitBox_area_entered(object area)
 		GlobalManager.StopGame(this);
 		GameIsStopped = true;
 		Bubbler.Emitting = false;
+
+		EmitSignal(nameof(SubIsDead));
 	// Replace with function body.
 }
 

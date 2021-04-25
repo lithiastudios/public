@@ -22,6 +22,8 @@ public class GameWorld : Node2D
 	DateTime LastObstacle;
 	DateTime LastCreature;
 
+	private AnimationPlayer CircleWipeAnimationPlayer;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -30,6 +32,7 @@ public class GameWorld : Node2D
 		LastCreature = DateTime.Now;
 
 		PlayerSub = (PlayerSub)GetNode("PlayerSub");
+		CircleWipeAnimationPlayer = (AnimationPlayer)GetNode("CircleWipe/ColorRect/AnimationPlayer");
 
 		var globalVars = GlobalManager.GetGlobalGameVariables(this);
 		globalVars.PlayerSub = PlayerSub;
@@ -92,4 +95,12 @@ public class GameWorld : Node2D
 		}
 		AddChild(instance);
 	}
+	
+	
+	private void _on_PlayerSub_SubIsDead()
+	{
+		CircleWipeAnimationPlayer.Play("circle_in");
+	// Replace with function body.
+	}
 }
+

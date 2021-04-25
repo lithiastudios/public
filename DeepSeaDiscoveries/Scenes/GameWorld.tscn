@@ -27,10 +27,10 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = SubResource( 2 )
-shader_param/circle_size = 0.0
+shader_param/circle_size = 0.9
 
 [sub_resource type="Animation" id=4]
-resource_name = "circles_in"
+resource_name = "circle_in"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:material:shader_param/circle_size")
 tracks/0/interp = 1
@@ -137,7 +137,8 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CircleWipe/ColorRect"]
-anims/circles_in = SubResource( 4 )
+anims/circle_in = SubResource( 4 )
+[connection signal="SubIsDead" from="PlayerSub" to="." method="_on_PlayerSub_SubIsDead"]
 
 [editable path="LeftWall"]
 

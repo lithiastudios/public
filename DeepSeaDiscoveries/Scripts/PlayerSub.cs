@@ -39,9 +39,16 @@ public class PlayerSub : KinematicBody2D
 	public Godot.Collections.Dictionary<string, int> CreaturesCaught;
 	public Godot.Collections.Dictionary<string, int> CreaturesCost;
 
+	private AudioStreamPlayer2D CrashAudio;
+	private AudioStreamPlayer2D HookLaunchAudio;
+	private AudioStreamPlayer2D PickupCreatureAudio;
 
 	public override void _Ready()
 	{
+		CrashAudio = GetNode<AudioStreamPlayer2D>("CrashAudio");
+		HookLaunchAudio = GetNode<AudioStreamPlayer2D>("HookLaunchAudio");
+		PickupCreatureAudio = GetNode<AudioStreamPlayer2D>("PickupCreatureAudio");
+
 		CreaturesCaught = new Godot.Collections.Dictionary<string, int>();
 		CreaturesCost = new Godot.Collections.Dictionary<string, int>();
 		Hookable = true;
@@ -70,6 +77,7 @@ public class PlayerSub : KinematicBody2D
 
 	public void CreatureGet(Creature creature, int cost, string name)
 	{
+		PickupCreatureAudio.Play();
 		if(!CreaturesCaught.ContainsKey(name))
 		{
 			GD.Print("Couldn't find:" + name + " setting to 1.");
@@ -136,6 +144,7 @@ public class PlayerSub : KinematicBody2D
 					HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + hookLength), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
 					HookLaunch.Start();
 
+					HookLaunchAudio.Play();
 					HookHitBoxCollision.Disabled = false;
 				}
 			}
@@ -178,6 +187,8 @@ private void _on_HitBox_area_entered(object area)
 {
 		if (!OnSurface)
 		{
+			CrashAudio.Position = Position;
+			CrashAudio.Play();
 			GD.Print("SUB IS DEAD!");
 			CrashParticles.Emitting = true;
 			GlobalManager.StopGame(this);

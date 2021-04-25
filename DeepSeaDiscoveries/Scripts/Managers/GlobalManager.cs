@@ -34,7 +34,7 @@ namespace DeepSeaDiscoveries.Scripts.Managers
 			globalVars.PlayerMoney = money;
 		}
 
-		public static int GetPlayerMoney(Node2D currentNode, int money)
+		public static int GetPlayerMoney(Node2D currentNode)
 		{
 			var globalVars = GetGlobalGameVariables(currentNode);
 			return globalVars.PlayerMoney;

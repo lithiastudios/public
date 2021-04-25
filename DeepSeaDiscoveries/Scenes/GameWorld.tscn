@@ -128,6 +128,19 @@ one_shot = true
 
 [node name="ScoreCanvas" type="CanvasLayer" parent="."]
 
+[node name="PlayerMoneyLabel" type="Label" parent="ScoreCanvas"]
+margin_left = 834.354
+margin_top = 78.0019
+margin_right = 1019.35
+margin_bottom = 95.0019
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.141176, 0.94902, 0, 1 )
+text = "$0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DepthLabel" type="Label" parent="ScoreCanvas"]
 margin_left = 834.0
 margin_top = 43.0

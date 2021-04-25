@@ -17,6 +17,8 @@ public class Surface : Node2D
 
 	public bool IsWipeIn;
 
+	private Label MoneyLabel;
+
 	private ColorRect Water1Rect;
 	private Tween Water1Tween;
 
@@ -34,7 +36,7 @@ public class Surface : Node2D
 
 	public override void _Ready()
 	{
-		
+		MoneyLabel = GetNode<Label>("CanvasLayer/MoneyLabel");
 		LaunchTimer = GetNode<Timer>("LaunchTimer");
 
 		LaunchLabel = GetNode<Label>("CanvasLayer2/Label");
@@ -59,7 +61,8 @@ public class Surface : Node2D
 		PlayerSub.StartBubbler(false);
 
 		CircleWipeAnimationPlayer = (AnimationPlayer)GetNode("CircleWipe/ColorRect/AnimationPlayer");
-	
+
+		MoneyLabel.Text = "$" + GlobalManager.GetPlayerMoney(this);
 		if(GlobalManager.LevelHasBeenPlayed(this))
 		{
 			IsWipeIn = true;

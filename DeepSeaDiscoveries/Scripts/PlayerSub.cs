@@ -8,7 +8,7 @@ public class PlayerSub : KinematicBody2D
 	[Signal]
 	public delegate void SubIsDead();
 
-	private const int MOVE_SPEED = 250;
+	private const int MOVE_SPEED = 400;
 
 	private CollisionShape2D HookHitBoxCollision;
 
@@ -36,14 +36,14 @@ public class PlayerSub : KinematicBody2D
 
 	private bool GameIsStopped;
 
-	private Dictionary<string, int> CreaturesCaught;
-	private Dictionary<string, int> CreaturesCost;
+	public Godot.Collections.Dictionary<string, int> CreaturesCaught;
+	public Godot.Collections.Dictionary<string, int> CreaturesCost;
 
 
 	public override void _Ready()
 	{
-		CreaturesCaught = new Dictionary<string, int>();
-		CreaturesCost = new Dictionary<string, int>();
+		CreaturesCaught = new Godot.Collections.Dictionary<string, int>();
+		CreaturesCost = new Godot.Collections.Dictionary<string, int>();
 		Hookable = true;
 		Hook = GetNode<Node2D>("Hook");
 		HookChain = GetNode<ColorRect>("HookChain");
@@ -72,11 +72,18 @@ public class PlayerSub : KinematicBody2D
 	{
 		if(!CreaturesCaught.ContainsKey(name))
 		{
+			GD.Print("Couldn't find:" + name + " setting to 1.");
 			CreaturesCaught.Add(name, 1);
 		}
 		else
 		{
-			CreaturesCaught[name] = CreaturesCaught[name]++;
+			var current = CreaturesCaught[name];
+			 current++;
+
+			CreaturesCaught[name] = current++;
+			GD.Print("New value: " + current);
+
+			GD.Print("Did find:" + name + " setting to " + CreaturesCaught[name]);
 		}
 
 		if(!CreaturesCost.ContainsKey(name))
@@ -178,11 +185,6 @@ private void _on_HitBox_area_entered(object area)
 			Bubbler.Emitting = false;
 
 			EmitSignal(nameof(SubIsDead));
-
-			foreach (var creature in CreaturesCaught)
-			{
-				GD.Print("Caught: " + creature.Value + " of " + creature.Key + " at $" + CreaturesCost[creature.Key]);
-			}
 		}
 		// Replace with function body.
 	}

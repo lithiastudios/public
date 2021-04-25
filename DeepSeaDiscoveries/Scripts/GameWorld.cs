@@ -33,6 +33,8 @@ public class GameWorld : Node2D
 
 	private bool GameIsStarting;
 
+	private Label PlayerMoneyLabel;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -42,7 +44,7 @@ public class GameWorld : Node2D
 		LastCreature = DateTime.Now;
 
 		ScoreCanvas = GetNode<CanvasLayer>("ScoreCanvas");
-
+		PlayerMoneyLabel = GetNode<Label>("ScoreCanvas/PlayerMoneyLabel");
 		DepthLabel = GetNode<Label>("ScoreCanvas/DepthLabel");
 		GameOverTimer = GetNode<Timer>("GameOverTimer");
 		PlayerSub = (PlayerSub)GetNode("PlayerSub");
@@ -68,6 +70,8 @@ public class GameWorld : Node2D
 		
 		GameIsStarting = true;
 		CircleWipeAnimationPlayer.Play("circle_out");
+
+		PlayerMoneyLabel.Text = "$" + GlobalManager.GetPlayerMoney(this);
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -146,7 +150,14 @@ private void _on_GameOverTimer_timeout()
 		else
 		{
 			// level over..
+			foreach (var creature in PlayerSub.CreaturesCaught)
+			{
+				var money = creature.Value * PlayerSub.CreaturesCost[creature.Key];
+				var currentMoney = GlobalManager.GetPlayerMoney(this);
 
+				GlobalManager.SetPlayerMoney(this, currentMoney + money);
+				GD.Print("Caught: " + creature.Value + " of " + creature.Key + " at $" + PlayerSub.CreaturesCost[creature.Key]);
+			}
 			GetTree().ChangeScene("res://Scenes/Surface.tscn");
 		}
 

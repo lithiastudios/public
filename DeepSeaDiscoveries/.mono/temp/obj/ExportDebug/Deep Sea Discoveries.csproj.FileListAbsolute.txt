@@ -1,0 +1,8 @@
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\bin\ExportDebug\Deep Sea Discoveries.dll
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\bin\ExportDebug\Deep Sea Discoveries.pdb
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\obj\ExportDebug\Deep Sea Discoveries.csprojAssemblyReference.cache
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\obj\ExportDebug\Deep Sea Discoveries.AssemblyInfoInputs.cache
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\obj\ExportDebug\Deep Sea Discoveries.AssemblyInfo.cs
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\obj\ExportDebug\Deep Sea Discoveries.csproj.CoreCompileInputs.cache
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\obj\ExportDebug\Deep Sea Discoveries.dll
+C:\Users\kevin\Documents\public\DeepSeaDiscoveries\.mono\temp\obj\ExportDebug\Deep Sea Discoveries.pdb

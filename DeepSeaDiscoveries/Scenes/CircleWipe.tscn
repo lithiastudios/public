@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float circle_size = 0.5f;
+
+void fragment() { 
+	if(distance(vec2(0.5, 0.5), UV) < circle_size)
+	{
+		COLOR.a = 0f;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/circle_size = 1.0
+
+[sub_resource type="Animation" id=3]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/circle_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
+[node name="CircleWipe" type="CanvasLayer"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
+anims/circle_in = SubResource( 3 )

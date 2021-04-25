@@ -1,3 +1,4 @@
+using DeepSeaDiscoveries.Scripts.Managers;
 using Godot;
 using System;
 
@@ -9,6 +10,7 @@ public class Surface : Node2D
 
 	private Array SubBobPositions = new float[] { 400, 395 };
 
+	private AnimationPlayer CircleWipeAnimationPlayer;
 	private PlayerSub PlayerSub;
 
 	private Tween SubBobTween;
@@ -52,6 +54,8 @@ public class Surface : Node2D
 
 		PlayerSub.OnSurface = true;
 		PlayerSub.StartBubbler(false);
+
+		CircleWipeAnimationPlayer = (AnimationPlayer)GetNode("CircleWipe/ColorRect/AnimationPlayer");
 	}
 
 	private void StartPlayerBobTween()
@@ -119,9 +123,21 @@ public class Surface : Node2D
 			TimeOut--;
 			LaunchLabel.Text = "Launching In  " + TimeOut + " !";
 		}
+		else
+		{
+			LaunchSub();
+		}			
 		// Replace with function body.
 	}
 
+	private void LaunchSub()
+	{
+		LaunchTimer.Stop();
+		GlobalManager.StopGame(this);
+
+		CircleWipeAnimationPlayer.Play("circle_in");
+
+	}
 
 	private void _on_Area2D_area_entered(object area)
 	{

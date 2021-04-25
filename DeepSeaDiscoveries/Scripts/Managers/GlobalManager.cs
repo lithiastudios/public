@@ -17,10 +17,21 @@ namespace DeepSeaDiscoveries.Scripts.Managers
 		}
 
 		public static void StopGame(Node2D currentNode)
+        {
+            SetGameStatus(currentNode, false);
+        }
+
+        private static void SetGameStatus(Node2D currentNode, bool isGameStopped)
+        {
+            var globalVars = (GlobalGameVariables)currentNode.GetNode("/root/GlobalGameVariables");
+            globalVars.IsGameStopped = isGameStopped;
+        }
+
+        public static void StartGame(Node2D currentNode)
 		{
-			var globalVars = (GlobalGameVariables)currentNode.GetNode("/root/GlobalGameVariables");
-			globalVars.IsGameStopped = true;
+			SetGameStatus(currentNode, true);
 		}
+
 
 		public static bool IsGameStopped(Node2D currentNode)
 		{

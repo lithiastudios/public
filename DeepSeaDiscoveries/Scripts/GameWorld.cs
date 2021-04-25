@@ -63,6 +63,7 @@ public class GameWorld : Node2D
 
 		LeftWall2.GlobalPosition = new Vector2(LeftWall.GlobalPosition.x, LeftWall2.CollisionHeight * 2);
 		RightWall2.GlobalPosition = new Vector2(RightWall.GlobalPosition.x, RightWall2.CollisionHeight * 2);
+		GlobalManager.StartGame(this);
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.

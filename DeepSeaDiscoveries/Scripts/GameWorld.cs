@@ -8,6 +8,7 @@ public class GameWorld : Node2D
 	private const int TimeBetweenCreaturesSeconds = 2;
 
 	private Label DepthLabel;
+
 	
 	private CanvasLayer ScoreCanvas;
 

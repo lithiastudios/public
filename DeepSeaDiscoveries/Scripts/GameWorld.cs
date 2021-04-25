@@ -97,20 +97,29 @@ public class GameWorld : Node2D
 				LastObstacle = DateTime.Now;
 			}
 
+			var numSecs = (DateTime.Now - TimeStarted).Seconds;
+			Depth = (int)(numSecs * 1.5f);
+
 			if (randomNumber > 99 && (DateTime.Now - LastCreature).Seconds >= TimeBetweenCreaturesSeconds)
 			{
 				var creature = GD.Load<PackedScene>("res://Scenes/Creature.tscn");
 				var instance = creature.Instance() as Creature;
 				
 				instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y);
-				instance.Init(45, "fish1");
+
+				if (Depth <= 15)
+				{
+					instance.Init(45, "fish1");
+				}
+				else
+				{
+					instance.Init(100, "fish2");
+				}
 
 				AddChild(instance);
 				LastCreature = DateTime.Now;
 			}
 	
-			var numSecs = (DateTime.Now - TimeStarted).Seconds;
-			Depth =  (int)(numSecs * 1.5f);
 			DepthLabel.Text = Depth.ToString() + "m";
 		}
 

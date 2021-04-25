@@ -167,13 +167,47 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ScoreSummaryCanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Node2D" type="Node2D" parent="ScoreSummaryCanvasLayer"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="ScoreSummaryCanvasLayer/Node2D"]
+margin_left = 311.018
+margin_top = 44.0497
+margin_right = 711.018
+margin_bottom = 444.05
+color = Color( 0, 0, 0, 0.584314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="ScoreSummaryCanvasLayer/Node2D"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 409.865
+margin_top = 75.7375
+margin_right = 602.865
+margin_bottom = 116.737
+custom_fonts/font = SubResource( 3 )
+text = "Collections"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="CircleWipe" parent="." instance=ExtResource( 8 )]
 
 [node name="ColorRect" parent="CircleWipe" index="0"]
 material = SubResource( 6 )
+
+[node name="ScoreSummaryTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
 [connection signal="SubIsDead" from="PlayerSub" to="." method="_on_PlayerSub_SubIsDead"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
 [connection signal="CircleWipeComplete" from="CircleWipe" to="." method="_on_CircleWipe_CircleWipeComplete"]
+[connection signal="timeout" from="ScoreSummaryTimer" to="." method="_on_ScoreSummaryTimer_timeout"]
 
 [editable path="LeftWall"]
 

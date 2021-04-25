@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/fish1.png" type="Texture" id=1]
+[ext_resource path="res://Fonts/LithiaStudiosHandwriting.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+outline_size = 2
+outline_color = Color( 0.0784314, 0.682353, 0.811765, 1 )
+font_data = ExtResource( 2 )
+
+[node name="ScoreSummaryNode" type="Node2D"]
+
+[node name="AmountSummaryLabel" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 431.89
+margin_top = 0.33371
+margin_right = 624.89
+margin_bottom = 41.3337
+custom_fonts/font = SubResource( 1 )
+text = "x 3     $45"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 422.143, 11.2896 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+hframes = 4

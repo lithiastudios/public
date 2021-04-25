@@ -12,6 +12,8 @@ public class GameWorld : Node2D
 	
 	private CanvasLayer ScoreCanvas;
 
+	private Timer ScoreSummaryTimer;
+
 	private Wall LeftWall;
 	private Wall LeftWall2;
 
@@ -34,10 +36,11 @@ public class GameWorld : Node2D
 	private bool GameIsStarting;
 
 	private Label PlayerMoneyLabel;
-
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		ScoreSummaryTimer = GetNode<Timer>("ScoreSummaryTimer");
 		TimeStarted = DateTime.Now;
 		OS.CenterWindow();
 		LastObstacle = DateTime.Now;
@@ -71,6 +74,11 @@ public class GameWorld : Node2D
 		GameIsStarting = true;
 		CircleWipeAnimationPlayer.Play("circle_out");
 
+		SetPlayerMoneyText();
+	}
+
+	private void SetPlayerMoneyText()
+	{
 		PlayerMoneyLabel.Text = "$" + GlobalManager.GetPlayerMoney(this);
 	}
 
@@ -130,14 +138,53 @@ public class GameWorld : Node2D
 	{
 		GameOverTimer.Start();
 	}
-	
-	
-private void _on_GameOverTimer_timeout()
-{
-		CircleWipeAnimationPlayer.Play("circle_in");
 
-	// Replace with function body.
-}
+
+	private void _on_GameOverTimer_timeout()
+	{
+		//	
+
+		var summaryRoot = GetNode<Node2D>("ScoreSummaryCanvasLayer/Node2D");
+		summaryRoot.Visible = true;
+
+		// level over..
+		var nodePos = new Vector2(0, 135);
+		var rowSpacing = 0;
+
+		foreach (var creature in PlayerSub.CreaturesCaught)
+		{
+			var summaryNode = GD.Load<PackedScene>("res://Scenes/ScoreSummaryNode.tscn");
+			var instance = summaryNode.Instance() as Node2D;
+
+			var money = creature.Value * PlayerSub.CreaturesCost[creature.Key];
+			var currentMoney = GlobalManager.GetPlayerMoney(this);
+
+			GlobalManager.SetPlayerMoney(this, currentMoney + money);
+
+			var creatureSprite = instance.GetNode<Sprite>("Sprite");
+			var tex = ResourceLoader.Load<Texture>("res://Sprites/" + creature.Key + ".png");
+			creatureSprite.Texture = tex;
+
+			var amountSummaryLabel = instance.GetNode<Label>("AmountSummaryLabel");
+			amountSummaryLabel.Text = creature.Value + " X $" + PlayerSub.CreaturesCost[creature.Key] + "   $" + money;
+
+			var newPos = new Vector2(nodePos.x, nodePos.y + rowSpacing);
+			nodePos = newPos;
+
+			instance.Position = nodePos;
+			rowSpacing += 50;
+
+			summaryRoot.AddChild(instance);
+			SetPlayerMoneyText();
+
+			GD.Print("Caught: " + creature.Value + " of " + creature.Key + " at $" + PlayerSub.CreaturesCost[creature.Key]);
+
+			// Replace with function body.
+		}
+
+		ScoreSummaryTimer.Start();
+	}
+
 	private void _on_CircleWipe_CircleWipeComplete()
 	{
 		if (GameIsStarting)
@@ -149,21 +196,20 @@ private void _on_GameOverTimer_timeout()
 		}
 		else
 		{
-			// level over..
-			foreach (var creature in PlayerSub.CreaturesCaught)
-			{
-				var money = creature.Value * PlayerSub.CreaturesCost[creature.Key];
-				var currentMoney = GlobalManager.GetPlayerMoney(this);
-
-				GlobalManager.SetPlayerMoney(this, currentMoney + money);
-				GD.Print("Caught: " + creature.Value + " of " + creature.Key + " at $" + PlayerSub.CreaturesCost[creature.Key]);
-			}
 			GetTree().ChangeScene("res://Scenes/Surface.tscn");
 		}
 
 	}
 
+
+	private void _on_ScoreSummaryTimer_timeout()
+	{
+		CircleWipeAnimationPlayer.Play("circle_in");
+		// Replace with function body.
+	}
 }
+
+
 
 
 

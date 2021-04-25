@@ -10,6 +10,8 @@ public class PlayerSub : KinematicBody2D
 
 	private const int MOVE_SPEED = 250;
 
+	private CollisionShape2D HookHitBoxCollision;
+
 	private Node2D Hook;
 	private ColorRect HookChain;
 
@@ -46,6 +48,9 @@ public class PlayerSub : KinematicBody2D
 		Hook = GetNode<Node2D>("Hook");
 		HookChain = GetNode<ColorRect>("HookChain");
 		OriginalHookChainHeight = HookChain.GetRect().Size.y;
+
+		HookHitBoxCollision = GetNode<CollisionShape2D>("Hook/Claw/Area2D/CollisionShape2D");
+		HookHitBoxCollision.Disabled = true;
 
 		HookLaunch = GetNode<Tween>("HookLaunch");
 		HookRetract = GetNode<Tween>("HookRetract");
@@ -123,6 +128,8 @@ public class PlayerSub : KinematicBody2D
 
 					HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + hookLength), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
 					HookLaunch.Start();
+
+					HookHitBoxCollision.Disabled = false;
 				}
 			}
 			MoveAndCollide(playerVec * delta * MOVE_SPEED);
@@ -156,6 +163,7 @@ public class PlayerSub : KinematicBody2D
 			CurrentCreature.QueueFree();
 		}
 		HasCreature = false;
+		HookHitBoxCollision.Disabled = true;
 	}
 	
 	

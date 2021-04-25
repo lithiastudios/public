@@ -14,6 +14,8 @@ public class Creature : KinematicBody2D
 	private bool Caught;
 	private int Cost = 50;
 
+	public string SpriteName;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

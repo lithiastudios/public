@@ -161,8 +161,14 @@ private void _on_HitBox_area_entered(object area)
 		Bubbler.Emitting = false;
 
 		EmitSignal(nameof(SubIsDead));
-	// Replace with function body.
-}
+
+		foreach(var creature in CreaturesCaught)
+		{
+			GD.Print("Caught: " + creature.Value + " of " + creature.Key + " at $" + CreaturesCost[creature.Key]);
+		}
+
+		// Replace with function body.
+	}
 
 }
 

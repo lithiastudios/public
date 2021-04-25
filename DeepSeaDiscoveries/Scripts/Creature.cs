@@ -59,7 +59,7 @@ public class Creature : KinematicBody2D
 		Caught = true;
 
 		var playerSub = GlobalManager.GetGlobalGameVariables(this).PlayerSub;
-		playerSub.CreatureGet(this, Cost, GetTree().CurrentScene.Name);
+		playerSub.CreatureGet(this, Cost, SpriteName);
 
 		// Replace with function body.
 	}

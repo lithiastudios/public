@@ -12,6 +12,7 @@ public class Creature : KinematicBody2D
 	private CollisionShape2D CollisionShape;
 	private float CollisionHeight;
 	private bool Caught;
+	private int Cost = 50;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -45,7 +46,7 @@ public class Creature : KinematicBody2D
 		Caught = true;
 
 		var playerSub = GlobalManager.GetGlobalGameVariables(this).PlayerSub;
-		playerSub.CreatureGet(this);
+		playerSub.CreatureGet(this, Cost, GetTree().CurrentScene.Name);
 
 		// Replace with function body.
 	}

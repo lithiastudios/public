@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Sprites/playersub-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/PlayerSub.cs" type="Script" id=2]
 [ext_resource path="res://Scenes/Hook.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/bubble.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/cloud.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/HookChain.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 16 )
@@ -47,6 +48,10 @@ extents = Vector2( 30.7019, 10 )
 [node name="PlayerSub" type="KinematicBody2D"]
 collision_mask = 2
 script = ExtResource( 2 )
+
+[node name="HookChain" parent="." instance=ExtResource( 6 )]
+margin_top = -20.0
+margin_bottom = -16.0
 
 [node name="Hook" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, 4 )
@@ -97,8 +102,14 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2( 1.98427, 12.1039 )
 shape = SubResource( 5 )
+
+[node name="HookChainLaunch" type="Tween" parent="."]
+
+[node name="HookChainRetract" type="Tween" parent="."]
 [connection signal="tween_completed" from="HookLaunch" to="." method="_on_HookLaunch_tween_completed"]
 [connection signal="tween_completed" from="HookRetract" to="." method="_on_HookRetract_tween_completed"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
+
+[editable path="HookChain"]
 
 [editable path="Hook"]

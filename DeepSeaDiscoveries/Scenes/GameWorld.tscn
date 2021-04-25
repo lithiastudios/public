@@ -25,7 +25,7 @@ outline_size = 2
 outline_color = Color( 0.0784314, 0.682353, 0.811765, 1 )
 font_data = ExtResource( 7 )
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
 
 uniform float circle_size = 0.5f;
@@ -37,9 +37,9 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
-shader = SubResource( 4 )
+shader = SubResource( 5 )
 shader_param/circle_size = 1.0
 
 [node name="GameWorld" type="Node2D"]
@@ -157,9 +157,10 @@ __meta__ = {
 [node name="CircleWipe" parent="." instance=ExtResource( 8 )]
 
 [node name="ColorRect" parent="CircleWipe" index="0"]
-material = SubResource( 5 )
+material = SubResource( 6 )
 [connection signal="SubIsDead" from="PlayerSub" to="." method="_on_PlayerSub_SubIsDead"]
 [connection signal="timeout" from="GameOverTimer" to="." method="_on_GameOverTimer_timeout"]
+[connection signal="CircleWipeComplete" from="CircleWipe" to="." method="_on_CircleWipe_CircleWipeComplete"]
 
 [editable path="LeftWall"]
 

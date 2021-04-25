@@ -3,6 +3,9 @@ using System;
 
 public class CircleWipe : CanvasLayer
 {
+	[Signal]
+	public delegate void CircleWipeComplete();
+
 	// Declare member variables here. Examples:
 	// private int a = 2;
 	// private string b = "text";
@@ -16,6 +19,7 @@ public class CircleWipe : CanvasLayer
 	public void OnAnimationComplete()
 	{
 		GD.Print("Circle wipe complete!");
+		EmitSignal(nameof(CircleWipeComplete));
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -30,7 +30,9 @@ public class GameWorld : Node2D
 
 	private AnimationPlayer CircleWipeAnimationPlayer;
 	private int Depth;
-	
+
+	private bool GameIsStarting;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -63,7 +65,9 @@ public class GameWorld : Node2D
 
 		LeftWall2.GlobalPosition = new Vector2(LeftWall.GlobalPosition.x, LeftWall2.CollisionHeight * 2);
 		RightWall2.GlobalPosition = new Vector2(RightWall.GlobalPosition.x, RightWall2.CollisionHeight * 2);
-		GlobalManager.StartGame(this);
+		
+		GameIsStarting = true;
+		CircleWipeAnimationPlayer.Play("circle_out");
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -130,7 +134,26 @@ private void _on_GameOverTimer_timeout()
 
 	// Replace with function body.
 }
+	private void _on_CircleWipe_CircleWipeComplete()
+	{
+		if (GameIsStarting)
+		{
+			GlobalManager.StartGame(this);
+			GD.Print("Starting game");
+			GD.Print("is game stopped:" + GlobalManager.IsGameStopped(this));
+			GameIsStarting = false;
+		}
+		else
+		{
+			// level over..
+
+			GetTree().ChangeScene("res://Scenes/Surface.tscn");
+		}
+
+	}
 
 }
+
+
 
 

@@ -15,6 +15,8 @@ public class Surface : Node2D
 
 	private Tween SubBobTween;
 
+	public bool IsWipeIn;
+
 	private ColorRect Water1Rect;
 	private Tween Water1Tween;
 
@@ -32,6 +34,7 @@ public class Surface : Node2D
 
 	public override void _Ready()
 	{
+		
 		LaunchTimer = GetNode<Timer>("LaunchTimer");
 
 		LaunchLabel = GetNode<Label>("CanvasLayer2/Label");
@@ -56,6 +59,13 @@ public class Surface : Node2D
 		PlayerSub.StartBubbler(false);
 
 		CircleWipeAnimationPlayer = (AnimationPlayer)GetNode("CircleWipe/ColorRect/AnimationPlayer");
+	
+		if(GlobalManager.LevelHasBeenPlayed(this))
+		{
+			IsWipeIn = true;
+			CircleWipeAnimationPlayer.Play("circle_out");
+		}
+		GlobalManager.SetLevelHasBeenPlayed(this);
 	}
 
 	private void StartPlayerBobTween()
@@ -155,7 +165,19 @@ public class Surface : Node2D
 		LaunchLabel.Text = "Sub  Launch";
 		// Replace with function body.
 	}
+		
+private void _on_CircleWipe_CircleWipeComplete()
+{
+		if (!IsWipeIn)
+		{
+			GetTree().ChangeScene("res://Scenes/GameWorld.tscn");
+		}
+		IsWipeIn = false;
+	// Replace with function body.
 }
+}
+
+
 
 
 

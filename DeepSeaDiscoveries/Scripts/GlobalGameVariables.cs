@@ -11,6 +11,7 @@ namespace DeepSeaDiscoveries.Scripts
 	{
 		public PlayerSub PlayerSub;
 		public bool IsGameStopped;
+		public bool LevelHasBeenPlayed;
 
 		public override void _Ready()
 		{

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/PlayerSub.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Wall.tscn" type="PackedScene" id=2]
@@ -12,6 +12,37 @@ flag_disable_z = true
 gravity = Vector3( 0, 98, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform float circle_size = 0.5f;
+
+void fragment() { 
+	if(distance(vec2(0.5, 0.5), UV) < circle_size)
+	{
+		COLOR.a = 0f;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/circle_size = 0.0
+
+[sub_resource type="Animation" id=4]
+resource_name = "circles_in"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/circle_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
 
 [node name="GameWorld" type="Node2D"]
 script = ExtResource( 3 )
@@ -93,6 +124,20 @@ lifetime = 78.42
 visibility_rect = Rect2( -100, -100, 400, 200 )
 process_material = SubResource( 1 )
 texture = ExtResource( 6 )
+
+[node name="CircleWipe" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CircleWipe"]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CircleWipe/ColorRect"]
+anims/circles_in = SubResource( 4 )
 
 [editable path="LeftWall"]
 

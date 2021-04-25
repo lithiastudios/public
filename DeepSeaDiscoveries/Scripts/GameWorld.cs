@@ -53,23 +53,26 @@ public class GameWorld : Node2D
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-		var randomNumber = RandomNumberGenerator.RandiRange(0, 100);
-
-		if (randomNumber == 0 && (DateTime.Now - LastObstacle).Seconds >= TimeBetweenObstaclesSeconds)
+		if (!GlobalManager.IsGameStopped(this))
 		{
-			var leftRightRandom = RandomNumberGenerator.RandiRange(0, 1);
+			var randomNumber = RandomNumberGenerator.RandiRange(0, 100);
 
-			AddObstacle(leftRightRandom == 0); 
-			LastObstacle = DateTime.Now;
-		}
+			if (randomNumber == 0 && (DateTime.Now - LastObstacle).Seconds >= TimeBetweenObstaclesSeconds)
+			{
+				var leftRightRandom = RandomNumberGenerator.RandiRange(0, 1);
 
-		if (randomNumber > 99 && (DateTime.Now - LastCreature).Seconds >= TimeBetweenCreaturesSeconds)
-		{
-			var creature = GD.Load<PackedScene>("res://Scenes/Creature.tscn");
-			var instance = creature.Instance() as Creature;
-			instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y);
-			AddChild(instance);
-			LastCreature = DateTime.Now;
+				AddObstacle(leftRightRandom == 0);
+				LastObstacle = DateTime.Now;
+			}
+
+			if (randomNumber > 99 && (DateTime.Now - LastCreature).Seconds >= TimeBetweenCreaturesSeconds)
+			{
+				var creature = GD.Load<PackedScene>("res://Scenes/Creature.tscn");
+				var instance = creature.Instance() as Creature;
+				instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y);
+				AddChild(instance);
+				LastCreature = DateTime.Now;
+			}
 		}
 		//GameTime += delta;
 	}

@@ -1,3 +1,4 @@
+using DeepSeaDiscoveries.Scripts.Managers;
 using Godot;
 using System;
 
@@ -12,9 +13,14 @@ public class PlayerSub : KinematicBody2D
 	private bool Hookable;
 	private bool HasCreature;
 
+	private Particles2D CrashParticles;
+	private Particles2D Bubbler;
+
 	private Creature CurrentCreature;
 
 	private Vector2 OriginalHookPosition;
+
+	private bool GameIsStopped;
 	
 	public override void _Ready()
 	{
@@ -23,6 +29,8 @@ public class PlayerSub : KinematicBody2D
 		HookLaunch = GetNode<Tween>("HookLaunch");
 		HookRetract = GetNode<Tween>("HookRetract");
 		OriginalHookPosition = Hook.Position;
+		CrashParticles = GetNode<Particles2D>("CrashParticles");
+		Bubbler = GetNode<Particles2D>("Bubbler");
 	}
 
 
@@ -46,25 +54,28 @@ public class PlayerSub : KinematicBody2D
 	{
 		Vector2 playerVec = new Vector2();
 
-		if(Input.IsActionPressed("ui_left"))
+		if (!GameIsStopped)
 		{
-			playerVec = new Vector2(-1, 0);
-		}
-		
-			if(Input.IsActionPressed("ui_right"))
+			if (Input.IsActionPressed("ui_left"))
+			{
+				playerVec = new Vector2(-1, 0);
+			}
+
+			if (Input.IsActionPressed("ui_right"))
 			{
 				playerVec = new Vector2(1, 0);
 			}
-			
-			if((Input.IsActionPressed("ui_accept") || Input.IsActionPressed("ui_select")) && Hookable)
+
+			if ((Input.IsActionPressed("ui_accept") || Input.IsActionPressed("ui_select")) && Hookable)
 			{
 				Hookable = false;
-			GD.Print("activated");
+				GD.Print("activated");
 
-			HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + 100), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
-			HookLaunch.Start();
+				HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + 100), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
+				HookLaunch.Start();
 			}
-		MoveAndCollide(playerVec * delta * MOVE_SPEED);
+			MoveAndCollide(playerVec * delta * MOVE_SPEED);
+		}
 	}
 	
 	private void RetractHook()
@@ -97,6 +108,10 @@ public class PlayerSub : KinematicBody2D
 private void _on_HitBox_area_entered(object area)
 {
 	GD.Print("SUB IS DEAD!");
+		CrashParticles.Emitting = true;
+		GlobalManager.StopGame(this);
+		GameIsStopped = true;
+		Bubbler.Emitting = false;
 	// Replace with function body.
 }
 

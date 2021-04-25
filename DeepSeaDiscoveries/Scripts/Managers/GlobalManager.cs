@@ -15,5 +15,18 @@ namespace DeepSeaDiscoveries.Scripts.Managers
 
 			return globalVars;
 		}
+
+		public static void StopGame(Node2D currentNode)
+		{
+			var globalVars = (GlobalGameVariables)currentNode.GetNode("/root/GlobalGameVariables");
+			globalVars.IsGameStopped = true;
+		}
+
+		public static bool IsGameStopped(Node2D currentNode)
+		{
+			var globalVars = (GlobalGameVariables)currentNode.GetNode("/root/GlobalGameVariables");
+
+			return globalVars.IsGameStopped;
+		}
 	}
 }

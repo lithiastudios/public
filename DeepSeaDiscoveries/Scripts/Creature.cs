@@ -24,7 +24,7 @@ public class Creature : KinematicBody2D
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-		if (!Caught)
+		if (!Caught && !GlobalManager.IsGameStopped(this))
 		{
 			var moveVec = new Vector2(0f, -.25f);
 

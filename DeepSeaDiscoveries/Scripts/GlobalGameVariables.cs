@@ -10,6 +10,7 @@ namespace DeepSeaDiscoveries.Scripts
 	public class GlobalGameVariables : Node2D
 	{
 		public PlayerSub PlayerSub;
+		public bool IsGameStopped;
 
 		public override void _Ready()
 		{

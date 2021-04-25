@@ -1,4 +1,5 @@
 using DeepSeaDiscoveries;
+using DeepSeaDiscoveries.Scripts.Managers;
 using Godot;
 using System;
 
@@ -25,16 +26,19 @@ public class Wall : StaticBody2D
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 	  public override void _Process(float delta)
 	{
-		var moveVec = new Vector2(0, -1f);
-	
-		Translate(moveVec * delta * GameConstants.BACKGROUND_MOVE_SPEED);
-		///	GD.Print("VPRect:" + ViewPortSize);
-
-		if (GlobalPosition.y <= -CollisionHeight) 
+		if (!GlobalManager.IsGameStopped(this))
 		{
-			var resetPosition = new Vector2(GlobalPosition.x, GetViewportRect().Size.y + CollisionHeight );// ViewPortSize.Size.y) ;
-		
-			 GlobalPosition = resetPosition;
+			var moveVec = new Vector2(0, -1f);
+
+			Translate(moveVec * delta * GameConstants.BACKGROUND_MOVE_SPEED);
+			///	GD.Print("VPRect:" + ViewPortSize);
+
+			if (GlobalPosition.y <= -CollisionHeight)
+			{
+				var resetPosition = new Vector2(GlobalPosition.x, GetViewportRect().Size.y + CollisionHeight);// ViewPortSize.Size.y) ;
+
+				GlobalPosition = resetPosition;
+			}
 		}
 	}
 }

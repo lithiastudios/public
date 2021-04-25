@@ -1,4 +1,5 @@
 using DeepSeaDiscoveries;
+using DeepSeaDiscoveries.Scripts.Managers;
 using Godot;
 using System;
 
@@ -20,8 +21,11 @@ public class Obstacle : Node2D
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
   {
-		var moveVec = new Vector2(0, -1f);
+		if (!GlobalManager.IsGameStopped(this))
+		{
+			var moveVec = new Vector2(0, -1f);
 
-		Translate(moveVec * delta * GameConstants.BACKGROUND_MOVE_SPEED);
+			Translate(moveVec * delta * GameConstants.BACKGROUND_MOVE_SPEED);
+		}
 	}
 }

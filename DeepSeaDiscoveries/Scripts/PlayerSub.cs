@@ -26,6 +26,7 @@ public class PlayerSub : KinematicBody2D
 	private Particles2D CrashParticles;
 	private Particles2D Bubbler;
 
+	public bool OnSurface;
 	private Creature CurrentCreature;
 
 	private float OriginalHookChainHeight;
@@ -57,6 +58,10 @@ public class PlayerSub : KinematicBody2D
 		Bubbler = GetNode<Particles2D>("Bubbler");
 	}
 
+	public void StartBubbler(bool started)
+	{
+		Bubbler.Emitting = started;
+	}
 
 	public void CreatureGet(Creature creature, int cost, string name)
 	{
@@ -105,17 +110,20 @@ public class PlayerSub : KinematicBody2D
 				playerVec = new Vector2(1, 0);
 			}
 
-			if ((Input.IsActionPressed("ui_accept") || Input.IsActionPressed("ui_select")) && Hookable)
+			if (!OnSurface)
 			{
-				Hookable = false;
-				GD.Print("activated");
+				if ((Input.IsActionPressed("ui_accept") || Input.IsActionPressed("ui_select")) && Hookable)
+				{
+					Hookable = false;
+					GD.Print("activated");
 
-				int hookLength = 100;
-				HookChainLaunch.InterpolateProperty(HookChain, "rect_size:y", HookChain.GetRect().Size.y, HookChain.GetRect().Size.y + hookLength, 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
-				HookChainLaunch.Start();
+					int hookLength = 100;
+					HookChainLaunch.InterpolateProperty(HookChain, "rect_size:y", HookChain.GetRect().Size.y, HookChain.GetRect().Size.y + hookLength, 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
+					HookChainLaunch.Start();
 
-				HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + hookLength), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
-				HookLaunch.Start();
+					HookLaunch.InterpolateProperty(Hook, "position", OriginalHookPosition, new Vector2(OriginalHookPosition.x, OriginalHookPosition.y + hookLength), 1, Tween.TransitionType.Quad, Tween.EaseType.InOut);
+					HookLaunch.Start();
+				}
 			}
 			MoveAndCollide(playerVec * delta * MOVE_SPEED);
 		}
@@ -153,20 +161,21 @@ public class PlayerSub : KinematicBody2D
 	
 private void _on_HitBox_area_entered(object area)
 {
-
-	GD.Print("SUB IS DEAD!");
-		CrashParticles.Emitting = true;
-		GlobalManager.StopGame(this);
-		GameIsStopped = true;
-		Bubbler.Emitting = false;
-
-		EmitSignal(nameof(SubIsDead));
-
-		foreach(var creature in CreaturesCaught)
+		if (!OnSurface)
 		{
-			GD.Print("Caught: " + creature.Value + " of " + creature.Key + " at $" + CreaturesCost[creature.Key]);
-		}
+			GD.Print("SUB IS DEAD!");
+			CrashParticles.Emitting = true;
+			GlobalManager.StopGame(this);
+			GameIsStopped = true;
+			Bubbler.Emitting = false;
 
+			EmitSignal(nameof(SubIsDead));
+
+			foreach (var creature in CreaturesCaught)
+			{
+				GD.Print("Caught: " + creature.Value + " of " + creature.Key + " at $" + CreaturesCost[creature.Key]);
+			}
+		}
 		// Replace with function body.
 	}
 

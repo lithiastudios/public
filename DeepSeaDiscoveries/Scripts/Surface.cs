@@ -6,7 +6,13 @@ public class Surface : Node2D
 	private  Array Water1MarginTops = new int[] { 410, 405 };
 	private  Array Water2MarginTops = new int[] { 420, 415 };
 	private  Array Water3MarginTops = new int[] { 434, 429 };
-		
+
+	private Array SubBobPositions = new float[] { 400, 395 };
+
+	private PlayerSub PlayerSub;
+
+	private Tween SubBobTween;
+
 	private ColorRect Water1Rect;
 	private Tween Water1Tween;
 
@@ -16,8 +22,18 @@ public class Surface : Node2D
 	private ColorRect Water3Rect;
 	private Tween Water3Tween;  // Called when the node enters the scene tree for the first time.
 
+	private Timer LaunchTimer;
+
+	private Label LaunchLabel;
+
+	private int TimeOut = 3;
+
 	public override void _Ready()
 	{
+		LaunchTimer = GetNode<Timer>("LaunchTimer");
+
+		LaunchLabel = GetNode<Label>("CanvasLayer2/Label");
+		SubBobTween = GetNode<Tween>("SubBobTween");
 		Water1Tween = GetNode<Tween>("Water1GrowTween");
 		Water1Rect = GetNode<ColorRect>("Water1Rect");
 
@@ -27,9 +43,21 @@ public class Surface : Node2D
 		Water3Tween = GetNode<Tween>("Water3GrowTween");
 		Water3Rect = GetNode<ColorRect>("Water3Rect");
 
+		PlayerSub = GetNode<PlayerSub>("PlayerSub");
+
+		StartPlayerBobTween();
 		StartWater1Tween();
 		StartWater2Tween();
 		StartWater3Tween();
+
+		PlayerSub.OnSurface = true;
+		PlayerSub.StartBubbler(false);
+	}
+
+	private void StartPlayerBobTween()
+	{
+		SubBobTween.InterpolateProperty(PlayerSub, "position:y", SubBobPositions.GetValue(0), SubBobPositions.GetValue(1), 1);
+		SubBobTween.Start();
 	}
 
 	private void StartWater1Tween()
@@ -74,7 +102,47 @@ public class Surface : Node2D
 		Array.Reverse(Water3MarginTops);
 		StartWater3Tween();
 	}
+
+	private void _on_SubBobTween_tween_completed(Godot.Object @object, NodePath key)
+	{
+		Array.Reverse(SubBobPositions);
+		StartPlayerBobTween();
+		// Replace with function body.
+	}
+
+
+	private void _on_LaunchTimer_timeout()
+	{
+		if (TimeOut > 0)
+		{
+			LaunchTimer.Start();
+			TimeOut--;
+			LaunchLabel.Text = "Launching In  " + TimeOut + " !";
+		}
+		// Replace with function body.
+	}
+
+
+	private void _on_Area2D_area_entered(object area)
+	{
+		LaunchTimer.Start();
+		TimeOut = 3;
+		LaunchLabel.Text = "Launching In   3 !";
+		// Replace with function body.
+	}
+
+
+	private void _on_Area2D_area_exited(object area)
+	{
+		LaunchTimer.Stop();
+		TimeOut = 3;
+		LaunchLabel.Text = "Sub  Launch";
+		// Replace with function body.
+	}
 }
+
+
+
 
 
 

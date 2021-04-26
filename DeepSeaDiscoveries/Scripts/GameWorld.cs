@@ -105,7 +105,9 @@ public class GameWorld : Node2D
 				var creature = GD.Load<PackedScene>("res://Scenes/Creature.tscn");
 				var instance = creature.Instance() as Creature;
 				
-				instance.Position = new Vector2(LeftWall.GlobalPosition.x + 150, GetViewportRect().Size.y);
+				var randomPos = RandomNumberGenerator.RandiRange(0, 75);
+				var xpos = randomPos + 150;
+				instance.Position = new Vector2(LeftWall.GlobalPosition.x + xpos, GetViewportRect().Size.y);
 
 				if (Depth <= 15)
 				{
